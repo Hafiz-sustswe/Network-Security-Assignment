@@ -1,0 +1,227 @@
+openssl enc -aes-128-cbc -e -in test.txt -out cipher.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+
+HERE -K is key of 32 char
+HERE -iv Initialization vector of 32 char
+-e is encryption
+-aes-128-cbc is the algo
+
+LAB 3 TASK 1:
+
+openssl enc -aes-128-cbc -e -in test.txt -out aes128cbc.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+openssl enc -aes-128-cbc -d -in aes128cbc.bin -out aes128cbcdecrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+
+openssl enc -aes-128-cfb -e -in test.txt -out aes128cfb.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+openssl enc -aes-128-cfb -d -in aes128cfb.bin -out aes128cfbdycrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+
+openssl enc -aes-256-cbc -e -in test.txt -out aes256cbc.bin -K 2222233333232323222223333323232322222333332323232222233333232323 -iv 5a04ec902686fb05a6b7a338b6e07760
+openssl enc -aes-256-cbc -d -in aes256cbc.bin -out aes256cbcdecrypted.txt -K 2222233333232323222223333323232322222333332323232222233333232323 -iv 5a04ec902686fb05a6b7a338b6e07760
+
+openssl enc -aes-128-ecb -e -in test.txt -out aes128ecb.bin -K 00112233445566778889aabbccddeeff
+openssl enc -aes-128-ecb -d -in aes128ecb.bin -out aes128ecbdecrypted.txt -K 00112233445566778889aabbccddeeff
+
+LAB 3 TASK 2:
+
+openssl enc -aes-128-ecb -e -in sample.bmp -out encryptedImage.bmp -K 00112233445566778889aabbccddeeff
+ghex sample.bmp &
+goto byte 54
+copy
+ghex encryptedImage.bmp &
+find and replace
+see image in viewer
+openssl enc -aes-128-ecb -d -in encryptedImage.bmp -out decryptedImage.bmp -K 00112233445566778889aabbccddeeff
+ghex decryptedImage.bmp
+find and replace
+see image.
+
+openssl enc -aes-128-cbc -e -in sample.bmp -out encryptedImageCBC.bmp -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex sample.bmp &
+goto byte 54
+copy
+ghex encryptedImageCBC.bmp &
+find and replace
+see image in viewer
+openssl enc -aes-128-cbc -d -in encryptedImageCBC.bmp -out decryptedImageCBC.bmp -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex decryptedImageCBC.bmp &
+find and replace
+see image.
+
+
+LAB 3 TASK 3:
+
+create a text file bigText.txt
+openssl enc -aes-128-ecb -e -in bigText.txt -out aes128ECBencrypted.bin -K 00112233445566778889aabbccddeeff
+ghex aes128ECBencrypted.bin &
+go to 30th bit
+change the HEX value
+openssl enc -aes-128-ecb -d -in aes128ECBencrypted.bin -out aes128ECBdecrypted.txt -K 00112233445566778889aabbccddeeff
+check the file
+
+openssl enc -aes-128-cbc -e -in bigText.txt -out aes128CBCencrypted.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex aes128CBCencrypted.bin &
+go to 30th bit
+change the HEX value
+openssl enc -aes-128-cbc -d -in aes128CBCencrypted.bin -out aes128CBCdecrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+check the file
+
+LAB 3 TASK 4:
+ECB = 	PADDING YES
+CBC =   PADDING YES
+CFB =   PADDING NO
+OFB =   PADDING NO
+
+openssl enc -aes-128-ecb -e -in text.txt -out ecb128encrypted.bin -K 00112233445566778889aabbccddeeff
+ghex ecb128encrypted.bin &
+openssl enc -aes-128-ecb -d -in ecb128encrypted.bin -out ecb128decrypted.txt -K 00112233445566778889aabbccddeeff
+this one is larger after endryption meaning it has padding
+
+openssl enc -aes-128-cbc -e -in text.txt -out cbc128encrypted.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex cbc128encrypted.bin &
+openssl enc -aes-128-cbc -d -in cbc128encrypted.bin -out cbc128decrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+this one is larger after endryption meaning it has padding
+
+openssl enc -aria-128-cfb8 -e -in text.txt -out cfb128encrypted.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex cfb128encrypted.bin &
+openssl enc -aria-128-cfb8 -d -in cfb128encrypted.bin -out cfb128decrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+this one is same sized after endryption meaning it do not have padding (stream)
+
+openssl enc -aria-128-ofb -e -in text.txt -out ofb128encrypted.bin -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+ghex ofb128encrypted.bin &
+openssl enc -aria-128-ofb -d -in ofb128encrypted.bin -out ofb128decrypted.txt -K 00112233445566778889aabbccddeeff -iv 20304050607082143234324324233333
+this one is same sized after endryption meaning it do not have padding (stream)
+
+
+LAB 3 TASK 5:
+create a text file nammed text.txt
+openssl dgst -sha1 text.txt
+output: fc2ba7ee7e57ffeec9ab7d24855ff083c708eb74
+openssl dgst -md5 text.txt
+output: df7d8c27fad4c98a6678c5719d633bdd
+openssl dgst -sha256 text.txt
+output: 923b829a244a667348611ffe93016ddf798224b71a0ad6c650e68f9e10cd1c6e
+
+LAB 3 TASK 6:
+create a text file nammed text.txt
+openssl dgst -sha1 -hmac "this is a key" text.txt
+output: a20bd55bbc8baf920f0d6ea2191107dd7f49a1b9
+openssl dgst -md5 -hmac "this is a key" text.txt
+output: 2c0973f8c19b0b7fea982f0dde75bb0f
+openssl dgst -sha256 -hmac "this is a key" text.txt
+output: 74430d7f825720f412eb3e765cde73d25b14fcd067b05aa4fdaec3419e0e4b93
+
+LAB 3 TASK 7:
+create a text file nammed text.txt
+openssl dgst -md5 text.txt
+output: df7d8c27fad4c98a6678c5719d633bdd
+ghex text.txt &
+flip a bit
+openssl dgst -md5 text.txt
+output:b5eb8626d203594db137cdf1c3b37b69
+match = 7
+
+update the text file text.txt to the previous main content
+openssl dgst -sha256 text.txt
+output: 923b829a244a667348611ffe93016ddf798224b71a0ad6c650e68f9e10cd1c6e
+ghex text.txt &
+flip a bit
+openssl dgst -sha256 text.txt
+output: 5f4a04044aa5e14da6887551c00326cac4abba24355c076c38fb9f8dd6151e8f
+match = 3
+
+h1 = "923b829a244a667348611ffe93016ddf798224b71a0ad6c650e68f9e10cd1c6e"
+h2 = "5f4a04044aa5e14da6887551c00326cac4abba24355c076c38fb9f8dd6151e8f"
+
+i = 0
+cnt = 0
+for ch in h1:
+    if ch==h2[i]:
+        cnt = cnt + 1
+    i = i + 1
+
+print(cnt)
+
+
+LAB 2 TASK 1:
+message = 'odroboewscdrolocdcwkbdmyxdbkmdzvkdpybwyeddrobo' #encrypted message
+LETTERS = 'abcdefghijklmnopqrstuvwxyz'
+
+for key in range(len(LETTERS)):
+   translated = ''
+   for symbol in message:
+      if symbol in LETTERS:
+         num = LETTERS.find(symbol)
+         num = num - key
+         if num < 0:
+            num = num + len(LETTERS)
+         translated = translated + LETTERS[num]
+      else:
+         translated = translated + symbol
+   print('Hacking key #%s: %s' % (key, translated))
+   
+RESULT: ethereum is the best smart contract platform out there
+
+LAB 2 TASK 2:
+"af p xpkcaqvnpk pfg, af ipqe qpri, gauuikifc tpw, ceiri udvk tiki afgarxifrphni cd eaowvmd popkwn, hiqpvri du ear jvaql vfgikrcpfgafm du cei xkafqaxnir du xrwqedearcdkw pfg du ear aopmafpcasi xkdhafmr afcd fit pkipr. ac tpr qdoudkcafm cd lfdt cepc au pfwceafm epxxifig cd ringdf eaorinu hiudki cei opceiopcaqr du cei uaing qdvng hi qdoxnicinw tdklig dvcpfg edt rndtnw ac xkdqiigig, pfg edt odvfcpafdvr cei dhrcpqnirceiki tdvng pc niprc kiopaf dfi mddg oafg cepc tdvng qdfcafvi cei kiripkqe"
+
+aceah toz puvg vcdl omj puvg yudqecov, omj loj auum klu thmjuv hs klu zlcvu shv zcbkg guovz, upuv zcmdu lcz vuwovroaeu jczoyyuovomdu omj qmubyudkuj vukqvm. klu vcdluz lu loj avhqnlk aodr svhw lcz kvopuez loj mht audhwu o ehdoe eunumj, omj ck toz yhyqeoveg auecupuj, tlokupuv klu hej sher wcnlk zog, klok klu lcee ok aon umj toz sqee hs kqmmuez zkqssuj tckl kvuozqvu. omj cs klok toz mhk umhqnl shv sowu, kluvu toz oezh lcz yvhehmnuj pcnhqv kh wovpue ok. kcwu thvu hm, aqk ck zuuwuj kh lopu eckkeu ussudk hm wv. aonncmz. ok mcmukg lu toz wqdl klu zowu oz ok scskg. ok mcmukg-mcmu klug aunom kh doee lcw tuee-yvuzuvpuj; aqk qmdlomnuj thqej lopu auum muovuv klu wovr. kluvu tuvu zhwu klok zlhhr klucv luojz omj klhqnlk klcz toz khh wqdl hs o nhhj klcmn; ck zuuwuj qmsocv klokomghmu zlhqej yhzzuzz (oyyovumkeg) yuvyukqoe ghqkl oz tuee oz (vuyqkujeg) cmubloqzkcaeu tuoekl. ck tcee lopu kh au yocj shv, klug zocj. ck czm'k mokqvoe, omj kvhqaeu tcee dhwu hs ck! aqk zh sov kvhqaeu loj mhk dhwu; omj oz wv. aonncmz toz numuvhqz tckl lcz whmug, whzk yuhyeu tuvu tceecmn kh shvncpu lcw lcz hjjckcuz omj lcz nhhj shvkqmu. lu vuwocmuj hm pczckcmn kuvwz tckl lcz vueokcpuz (ubduyk, hs dhqvzu, klu zodrpceeu- aonncmzuz), omj lu loj womg juphkuj ojwcvuvz owhmn klu lhaackz hs yhhv omj qmcwyhvkomk sowcecuz. aqk lu loj mh dehzu svcumjz, qmkce zhwu hs lcz ghqmnuv dhqzcmz aunom kh nvht qy. klu uejuzk hs kluzu, omj aceah'z sophqvcku, toz ghqmn svhjh aonncmz. tlum aceah toz mcmukg-mcmu lu ojhykuj svhjh oz lcz lucv, omj avhqnlk lcw kh ecpu ok aon umj; omj klu lhyuz hs klu zodrpceeu- aonncmzuz tuvu scmoeeg jozluj. aceah omj svhjh loyyumuj kh lopu klu zowu acvkljog, zuykuwauv 22mj. ghq loj aukkuv dhwu omj ecpu luvu, svhjh wg eoj, zocj aceah hmu jog; omj klum tu dom dueuavoku hqv acvkljog-yovkcuz dhwshvkoaeg khnukluv. ok klok kcwu svhjh toz zkcee cm lcz ktuumz, oz klu lhaackz doeeuj klu cvvuzyhmzcaeu ktumkcuz auktuum dlcejlhhj omj dhwcmn hs onu ok klcvkg-klvuu
+
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <map>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    
+    map < char , int > mp;
+    int total = 0;
+    
+    string s = "aceah toz puvg vcdl omj puvg yudqecov, omj loj auum klu thmjuv hs klu zlcvu shv zcbkg guovz, upuv zcmdu lcz vuwovroaeu jczoyyuovomdu omj qmubyudkuj vukqvm. klu vcdluz lu loj avhqnlk aodr svhw lcz kvopuez loj mht audhwu o ehdoe eunumj, omj ck toz yhyqeoveg auecupuj, tlokupuv klu hej sher wcnlk zog, klok klu lcee ok aon umj toz sqee hs kqmmuez zkqssuj tckl kvuozqvu. omj cs klok toz mhk umhqnl shv sowu, kluvu toz oezh lcz yvhehmnuj pcnhqv kh wovpue ok. kcwu thvu hm, aqk ck zuuwuj kh lopu eckkeu ussudk hm wv. aonncmz. ok mcmukg lu toz wqdl klu zowu oz ok scskg. ok mcmukg-mcmu klug aunom kh doee lcw tuee-yvuzuvpuj; aqk qmdlomnuj thqej lopu auum muovuv klu wovr. kluvu tuvu zhwu klok zlhhr klucv luojz omj klhqnlk klcz toz khh wqdl hs o nhhj klcmn; ck zuuwuj qmsocv klokomghmu zlhqej yhzzuzz (oyyovumkeg) yuvyukqoe ghqkl oz tuee oz (vuyqkujeg) cmubloqzkcaeu tuoekl. ck tcee lopu kh au yocj shv, klug zocj. ck czm'k mokqvoe, omj kvhqaeu tcee dhwu hs ck! aqk zh sov kvhqaeu loj mhk dhwu; omj oz wv. aonncmz toz numuvhqz tckl lcz whmug, whzk yuhyeu tuvu tceecmn kh shvncpu lcw lcz hjjckcuz omj lcz nhhj shvkqmu. lu vuwocmuj hm pczckcmn kuvwz tckl lcz vueokcpuz (ubduyk, hs dhqvzu, klu zodrpceeu- aonncmzuz), omj lu loj womg juphkuj ojwcvuvz owhmn klu lhaackz hs yhhv omj qmcwyhvkomk sowcecuz. aqk lu loj mh dehzu svcumjz, qmkce zhwu hs lcz ghqmnuv dhqzcmz aunom kh nvht qy. klu uejuzk hs kluzu, omj aceah'z sophqvcku, toz ghqmn svhjh aonncmz. tlum aceah toz mcmukg-mcmu lu ojhykuj svhjh oz lcz lucv, omj avhqnlk lcw kh ecpu ok aon umj; omj klu lhyuz hs klu zodrpceeu- aonncmzuz tuvu scmoeeg jozluj. aceah omj svhjh loyyumuj kh lopu klu zowu acvkljog, zuykuwauv 22mj. ghq loj aukkuv dhwu omj ecpu luvu, svhjh wg eoj, zocj aceah hmu jog; omj klum tu dom dueuavoku hqv acvkljog-yovkcuz dhwshvkoaeg khnukluv. ok klok kcwu svhjh toz zkcee cm lcz ktuumz, oz klu lhaackz doeeuj klu cvvuzyhmzcaeu ktumkcuz auktuum dlcejlhhj omj dhwcmn hs onu ok klcvkg-klvuu";
+    
+    for(auto lol: s){
+        if('a' <= lol && 'z' >= lol) mp[lol]++; total++;
+    }
+    
+    vector < pair < double , char > > vp;
+    string ef = "etaonhisrdluwmgcfybpkvjxzq";
+    string key = "abcdefghijklmnopqrstuvwxyz";
+    string f = "";
+    
+    for(auto lol: mp) {
+        vp.push_back({(lol.second * 100.00) / total, lol.first});
+    }
+    
+    sort(vp.begin(), vp.end());
+    
+    for(auto lol: vp){
+        //cout << lol.first << " " << lol.second << endl;
+        f += lol.second;
+    }
+    
+    reverse(f.begin(), f.end());
+    
+    //cout << "f : " << f << endl;
+    
+    int c = 0;
+    for(auto lol: f){
+        //cout << key[(int)ef[c] - (int)'a'] << " will be replaced as " << lol << endl;
+        key[(int)ef[c] - (int)'a'] = lol;
+        c++;
+    }
+    
+    cout << "Key Found : " << key << endl;
+    
+    string decrypted = s;
+    
+    int i = 0;
+    for(auto lol: s) {
+        if('a' <= s[i] && 'z' >= s[i]) decrypted[i] = key[(int)lol - (int)'a'];
+        i++;
+    }
+    
+    cout << "AFTER DECRYPTION : " << endl;
+    cout << decrypted << endl;
+    
+    return 0;
+}

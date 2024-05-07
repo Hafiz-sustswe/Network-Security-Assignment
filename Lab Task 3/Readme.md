@@ -110,7 +110,7 @@ CBC mode: <br>
 ## ✔️ Task 3
 ### Solution
 **Text file:** <br>
-<img src="./Images/Task 3/real.png" alt="real_image" width="500"/>
+<img src="./Task - 3/Original Text.png" alt="real_image" width="500"/>
 
 **Encryption Commands:** <br>
 ECB mode:
@@ -157,10 +157,10 @@ openssl enc -aes-128-ofb -e -in test.txt -out encrypted_test_ofb.txt -K 00112233
 ```
 
 CFB mode: <br>
-<img src="./Images/Task 3/corrupted_cfb.png" alt="encrypted_test_cfb" width="500"/>
+<img src="./Task - 3/corrupted textCFB.png" alt="encrypted_test_cfb" width="500"/>
 
 OFB mode: <br>
-<img src="./Images/Task 3/corrupted_ofb.png" alt="encrypted_test_ofb" width="500"/>
+<img src="./Task - 3/corrupted textOFB.png" alt="encrypted_test_ofb" width="500"/>
 
 **Decryption Commands:** <br>
 
